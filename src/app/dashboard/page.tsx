@@ -12,13 +12,13 @@ import {
 } from "lucide-react";
 
 export default function DashboardPage() {
-  const { data: user, isLoading, isError } = useGetMeQuery({});
+  const { data: user, isLoading, isFetching, isError } = useGetMeQuery({});
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Only redirect if loading is finished AND there's an error OR no user
-    if (!isLoading && (isError || !user)) {
+    // Wait for all initial loads and refetches to complete before judging the auth state
+    if (!isLoading && !isFetching && (isError || !user)) {
       router.push("/login");
     }
     // Only redirect to onboarding if we have a user and they are a patient without a profile
