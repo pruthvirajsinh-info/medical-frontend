@@ -13,7 +13,8 @@ export const useSocket = () => {
   useEffect(() => {
     if (!token) return;
 
-    const socket = io("http://localhost:4001", {
+    const targetUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+    const socket = io(targetUrl, {
       auth: { token },
     });
 
